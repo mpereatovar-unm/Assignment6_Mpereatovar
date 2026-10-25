@@ -19,7 +19,7 @@ int list_length(Coordinate *list_beginning)
     int count = 0;
     Coordinate *current = list_beginning->next;
 
-    while (current != nullptr)
+    while (current != nullptr) //walk node by node until we run of the end of the list
     {
         count++;
         current = current->next;
@@ -31,7 +31,7 @@ int list_length(Coordinate *list_beginning)
 // Add a new coordinate to the end of the list
 void add_coordinate(Coordinate *list_end, float x, float y)
 {
-    // Find the beginning of the list
+    // walk backward to find the beginning of the list
     Coordinate *beginning = list_end;
 
     while (beginning->previous != nullptr)
@@ -39,25 +39,25 @@ void add_coordinate(Coordinate *list_end, float x, float y)
         beginning = beginning->previous;
     }
 
-    // Create a new coordinate
+    // Create a new coordinate on the heap
     Coordinate *newCoord = new Coordinate;
 
     newCoord->x = x;
     newCoord->y = y;
     newCoord->coord_id = list_length(beginning) + 1;
 
-    // Connect the new coordinate to the list
+    // link the new node after the current end of the list
     newCoord->next = nullptr;
     newCoord->previous = list_end;
     list_end->next = newCoord;
 }
 
-// Display coordinates from first to last
+// Display coordinates from first node to last
 void forward_display(Coordinate *list_beginning)
 {
     Coordinate *current = list_beginning->next;
 
-    while (current != nullptr)
+    while (current != nullptr) //follow the next pointer until we reach the end of the list
     {
         cout << "ID: " << current->coord_id
              << " X: " << current->x
@@ -67,12 +67,12 @@ void forward_display(Coordinate *list_beginning)
     }
 }
 
-// Display coordinates from last to first
+// Display coordinates from last node to first
 void backward_display(Coordinate *list_end)
 {
     Coordinate *current = list_end;
 
-    // Stop before the dummy starting node
+    // Follow the previous pointer back to the beginning of the list
     while (current->previous != nullptr)
     {
         cout << "ID: " << current->coord_id
@@ -135,7 +135,7 @@ void closest_to(Coordinate *list_beginning, float x, float y)
 
     current = current->next;
 
-    // Check the distance of each remaining coordinate
+    // Check the distance of each remaining node; keep track of the closest one
     while (current != nullptr)
     {
         dx = current->x - x;
@@ -159,10 +159,11 @@ void closest_to(Coordinate *list_beginning, float x, float y)
     cout << "Distance: " << minDistance << endl;
 }
 
-// Main program
+// Main program, builds a doubly-linked list of the randomly x-y corrdinates.
+
 int main(int argc, char *argv[])
 {
-    // Check command-line input
+    // Check command line arguments
     if (argc != 2 || atoi(argv[1]) < 1)
     {
         cout << "Usage: ./main 10" << endl;
@@ -187,7 +188,7 @@ int main(int argc, char *argv[])
         // Add coordinate to the list
         add_coordinate(tail, x, y);
 
-        // Move tail to the new coordinate
+        // Move tail to the new added node
         tail = tail->next;
     }
 
