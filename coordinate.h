@@ -1,17 +1,17 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
-struct _corrdinate
+struct _coordinate
 {
     float x;
     float y;
     int coord_id;  // Unique identifier for the coordinate
-    struct _corrdinate* next;  // Pointer to the next coordinate
-    struct _corrdinate* prev;  // Pointer to the previous coordinate
+    struct _coordinate *next;  // Pointer to the next coordinate
+    struct _coordinate *previous;  // Pointer to the previous coordinate
 
 };
 
-    typedef struct _corrdinate Coordinate;
+    typedef struct _coordinate Coordinate;
 
     void add_coordinate(Coordinate *list_end, float x, float y); 
     /*This function adds a new coordinate to the end of the list.
